@@ -17,18 +17,13 @@ import java.util.Optional;
 @Service
 public class ActorServiceImpl implements ActorService {
 
-    private ActorRepository actorRepository;
-    private MovieRepository movieRepository;
+    private  ActorRepository actorRepository;
 
-    @Autowired
-    public ActorServiceImpl(ActorRepository actorRepository, MovieRepository movieRepository) {
-        this.actorRepository = actorRepository;
-        this.movieRepository = movieRepository;
-    }
 
     @Autowired
     public ActorServiceImpl(ActorRepository actorRepository) {
         this.actorRepository = actorRepository;
+
     }
 
     @Override
@@ -51,7 +46,7 @@ public class ActorServiceImpl implements ActorService {
         movie.addActor(actor);
 
         actorRepository.save(actor);
-        movieRepository.save(movie);
+
 
         Map<Movie, Actor> map = new HashMap<>();
         map.put(movie, actor);
@@ -73,7 +68,6 @@ public class ActorServiceImpl implements ActorService {
         Optional<Actor> foundActor = actorRepository.findById((long) id);
         if (foundActor.isPresent()) {
             actorRepository.deleteById((long) id);
-            actor.setId(id);
             actorRepository.save(actor);
             return actor;
         }
