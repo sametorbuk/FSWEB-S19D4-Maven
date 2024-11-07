@@ -18,7 +18,7 @@ public interface ActorService {
 
     Actor save(Actor actor);
 
-    Actor delete(int id);
+    Actor delete(long id);
 
     Actor update(ActorRequest actor, int id);
 }

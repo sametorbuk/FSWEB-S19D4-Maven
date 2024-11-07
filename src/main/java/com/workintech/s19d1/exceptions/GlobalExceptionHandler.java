@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> globalExceptionHandler(Exception exception){
-        ExceptionResponse response=new ExceptionResponse(LocalDateTime.now(), exception.getMessage(),HttpStatus.BAD_REQUEST.value());
+        ExceptionResponse response=new ExceptionResponse(LocalDateTime.now(), "General Exception occurred",HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

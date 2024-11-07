@@ -53,4 +53,6 @@ public class ActorController {
         Actor deletedActor = actorService.delete((int) id);
         return ResponseEntity.ok(deletedActor);
     }
+
+
 }
