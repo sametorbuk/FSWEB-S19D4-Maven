@@ -33,7 +33,7 @@ public class ActorServiceImpl implements ActorService {
         if (foundActor.isPresent()) {
             return foundActor.get();
         }
-        throw new ApiException("Actor not found with id: " + id, HttpStatus.NOT_FOUND);
+        throw new ApiException("actor is not found with id: " + id, HttpStatus.NOT_FOUND);
     }
 
     @Override
