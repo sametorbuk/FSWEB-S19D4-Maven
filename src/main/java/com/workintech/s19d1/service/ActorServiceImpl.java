@@ -1,6 +1,7 @@
 package com.workintech.s19d1.service;
 
 import com.workintech.s19d1.entity.Actor;
+import com.workintech.s19d1.entity.ActorRequest;
 import com.workintech.s19d1.entity.Movie;
 import com.workintech.s19d1.exceptions.ApiException;
 import com.workintech.s19d1.repository.ActorRepository;
@@ -41,16 +42,11 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public Map<Movie, Actor> save(Movie movie, Actor actor) {
-        actor.addMovie(movie);
-        movie.addActor(actor);
-
-        actorRepository.save(actor);
-
-
-        Map<Movie, Actor> map = new HashMap<>();
-        map.put(movie, actor);
-        return map;
+    public Actor save(ActorRequest actorRequest) {
+        Actor actor = actorRequest.getActor();
+        List<Movie> movie = actorRequest.getMovies();
+        actor.setMovies(movie);
+     return   actorRepository.save(actor);
     }
 
     @Override
@@ -64,14 +60,22 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public Actor update(Actor actor, int id) {
-        Optional<Actor> foundActor = actorRepository.findById((long) id);
-        if (foundActor.isPresent()) {
-            actorRepository.deleteById((long) id);
-            actorRepository.save(actor);
-            return actor;
-        }
-        throw new ApiException("There is no actor with this id", HttpStatus.NOT_FOUND);
+    public Actor update(ActorRequest actorRequest, int id) {
+      Actor actor = actorRequest.getActor();
+      List<Movie> movies = actorRequest.getMovies();
+      Optional<Actor> foundActor=actorRepository.findById((long) id);
+      if(foundActor.isPresent()){
+          Actor actor1 = foundActor.get();
+          actor1.setBirthDate(actor.getBirthDate());
+          actor1.setGender(actor.getGender());
+          actor1.setMovies(movies);
+          actor1.setLastName(actor.getLastName());
+          actor1.setFirstName(actor.getFirstName());
+          actorRepository.save(actor1);
+          return actor;
+      }
+
+      throw new ApiException("There is no actor with this id",HttpStatus.NOT_FOUND);
     }
 
     public Actor save(Actor actor) {

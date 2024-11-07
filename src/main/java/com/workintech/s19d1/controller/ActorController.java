@@ -7,6 +7,8 @@ import com.workintech.s19d1.service.ActorServiceImpl;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,19 +38,19 @@ public class ActorController {
     }
 
     @PostMapping
-    public Map<Movie, Actor> save(@RequestBody ActorRequest actorRequest) {
-        Actor actor = actorRequest.getActor();
-        Movie movie = actorRequest.getMovies().get(0);
-        return actorService.save(movie, actor);
+    public ResponseEntity<Actor> save(@RequestBody ActorRequest actorRequest) {
+        Actor savedActor = actorService.save(actorRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(savedActor);
     }
 
     @PutMapping("/{id}")
-    public Actor update(@RequestBody Actor actor, @PathVariable long id) {
-        return actorService.update(actor, (int) id);
+    public Actor update(@RequestBody ActorRequest actorRequest, @PathVariable long id) {
+       return actorService.update(actorRequest,(int) id);
     }
 
     @DeleteMapping("/{id}")
-    public Actor delete(@PathVariable long id) {
-        return actorService.delete((int) id);
+    public ResponseEntity<Actor> delete(@PathVariable long id) {
+        Actor deletedActor = actorService.delete((int) id);
+        return ResponseEntity.ok(deletedActor);
     }
 }

@@ -1,6 +1,7 @@
 package com.workintech.s19d1.service;
 
 import com.workintech.s19d1.entity.Actor;
+import com.workintech.s19d1.entity.ActorRequest;
 import com.workintech.s19d1.entity.Movie;
 import org.springframework.stereotype.Repository;
 
@@ -13,11 +14,11 @@ public interface ActorService {
 
     Actor findById(int id);
 
-    Map<Movie, Actor> save(Movie movie, Actor actor);
+    Actor save(ActorRequest actorRequest);
 
     Actor save(Actor actor);
 
     Actor delete(int id);
 
-    Actor update(Actor actor, int id);
+    Actor update(ActorRequest actor, int id);
 }
